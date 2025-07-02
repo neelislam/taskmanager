@@ -20,8 +20,17 @@ class _SignInScreenState extends State<SignInScreen> {
             children: [
               Text('Get Started With', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24,),
-              TextFormField(),
-              TextFormField(),
+              TextFormField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                ),
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,)
+              ),
               ElevatedButton(
                 onPressed: () {},
                 child: Icon(Icons.arrow_circle_right_outlined),
