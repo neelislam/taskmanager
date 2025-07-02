@@ -13,6 +13,8 @@ class _taskmanagerappState extends State<taskmanagerapp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        colorSchemeSeed: Colors.pink,
+        //primarySwatch: Colors.deepOrange,
         textTheme: TextTheme(
 titleLarge: TextStyle(
   fontSize: 28, fontWeight: FontWeight.w700
@@ -50,7 +52,13 @@ elevatedButtonTheme: ElevatedButtonThemeData(
     backgroundColor: Colors.green,
     foregroundColor: Colors.white,
   ),
-)
+),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.pink,
+
+          ),
+        ),
       ),
       home: SplashScreen(),
     );
