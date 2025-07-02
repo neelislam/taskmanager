@@ -12,6 +12,11 @@ class _taskmanagerappState extends State<taskmanagerapp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(
+
+        )
+      ),
       home: SplashScreen(),
     );
   }
