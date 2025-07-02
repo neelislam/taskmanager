@@ -18,10 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Get Started With', style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),),
+              Text('Get Started With', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24,),
               TextFormField(),
               TextFormField(),

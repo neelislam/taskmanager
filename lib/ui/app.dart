@@ -14,7 +14,9 @@ class _taskmanagerappState extends State<taskmanagerapp> {
     return MaterialApp(
       theme: ThemeData(
         textTheme: TextTheme(
-
+titleLarge: TextStyle(
+  fontSize: 28, fontWeight: FontWeight.w700
+)
         )
       ),
       home: SplashScreen(),
