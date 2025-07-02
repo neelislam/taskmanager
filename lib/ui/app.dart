@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/splash_screen.dart';
 
 class taskmanagerapp extends StatefulWidget {
   const taskmanagerapp({super.key});
@@ -10,11 +11,8 @@ class taskmanagerapp extends StatefulWidget {
 class _taskmanagerappState extends State<taskmanagerapp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: 
-        Text('Task Manager'),
-      ),
+    return MaterialApp(
+      home: SplashScreen(),
     );
   }
 }
