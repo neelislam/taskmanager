@@ -24,12 +24,50 @@ class _SignInScreenState extends State<SignInScreen> {
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
+                  hintText:'Email',
+                  // to make the text slim
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
                 ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
               ),
+              ),
+              const SizedBox(height: 15,),
               TextFormField(
                 decoration: InputDecoration(
                   fillColor: Colors.white,
-                  filled: true,)
+                  filled: true,
+                  hintText:'Password',
+                  // to make the text slim
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {},
