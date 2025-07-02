@@ -18,58 +18,32 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 80,),
               Text('Get Started With', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24,),
               TextFormField(
+                textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
                   hintText:'Email',
-                  // to make the text slim
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
               ),
               ),
-              const SizedBox(height: 15,),
+              const SizedBox(height: 8,),
               TextFormField(
+                obscureText: true,
                 decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
                   hintText:'Password',
-                  // to make the text slim
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
                 ),
               ),
+              const SizedBox(height: 16,),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size.fromWidth(double.maxFinite),//jototuku jaite pare dui pashe
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(4),
+
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                ),
                 onPressed: () {},
                 child: Icon(Icons.arrow_circle_right_outlined),
               ),

@@ -17,7 +17,29 @@ class _taskmanagerappState extends State<taskmanagerapp> {
 titleLarge: TextStyle(
   fontSize: 28, fontWeight: FontWeight.w700
 )
-        )
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.white,
+        filled: true,
+        // to make the text slim
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        hintStyle: TextStyle(
+          color: Colors.grey,
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+      ),
+
       ),
       home: SplashScreen(),
     );
