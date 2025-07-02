@@ -36,17 +36,12 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 16,),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size.fromWidth(double.maxFinite),//jototuku jaite pare dui pashe
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(4),
-
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                ),
                 onPressed: () {},
                 child: Icon(Icons.arrow_circle_right_outlined),
               ),
+              const SizedBox(height: 32,),
+              TextButton(onPressed: (){},
+                  child: Text('Forgot Password?'))
             ],
           ),
         ),

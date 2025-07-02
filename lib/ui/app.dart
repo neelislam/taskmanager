@@ -39,7 +39,18 @@ titleLarge: TextStyle(
           borderSide: BorderSide.none,
         ),
       ),
+elevatedButtonTheme: ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    fixedSize: Size.fromWidth(double.maxFinite),//jototuku jaite pare dui pashe
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadiusGeometry.circular(8),
 
+    ),
+    padding: EdgeInsets.symmetric(vertical: 12),
+    backgroundColor: Colors.green,
+    foregroundColor: Colors.white,
+  ),
+)
       ),
       home: SplashScreen(),
     );
