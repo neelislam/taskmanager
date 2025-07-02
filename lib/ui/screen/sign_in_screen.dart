@@ -41,7 +41,19 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 32,),
               TextButton(onPressed: (){},
-                  child: Text('Forgot Password?'))
+                  child: Text('Forgot Password?',
+                  style: TextStyle(
+                    color: Colors.deepOrange,
+                  ),
+                  )
+              ),
+              RichText(text: TextSpan(
+                text: "Don't have an account?",
+                style: TextStyle(
+                  color: Colors.black,
+                )
+              )
+              )
             ],
           ),
         ),
