@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  email_validator: ^3.0.0
 
 
   flutter_svg: ^2.2.0

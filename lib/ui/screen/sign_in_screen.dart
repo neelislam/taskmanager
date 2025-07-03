@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
@@ -37,7 +38,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: InputDecoration( hintText:'Email',
                   ),
                       validator:(String? value){
-                      if(value?.isEmpty?? true){
+                      String email = value ?? '';
+
+                      if(EmailValidator.validate(email) == false){
                         return 'Enter a valid email';
                       }
                         return null;
@@ -51,8 +54,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       hintText:'Password',
                     ),
                       validator:(String? value){
-                        if(value?.isEmpty?? true){
-                          return 'Enter a valid Password';
+                        if((value?.length ?? 0)< 6){
+                          return 'Enter a valid Password of minimum 7 length';
                         }
                         return null;
                       }
