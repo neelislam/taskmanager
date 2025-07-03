@@ -117,7 +117,13 @@ if(_formKey.currentState!.validate()){
   void _onTapSignUpButton(){
 
   }
-
+ @override
+  void dispose() {
+    // TODO: implement dispose
+   _emailTEController.dispose();
+   _passwordTEController.dispose();
+    super.dispose();
+  }
 
 
 }
