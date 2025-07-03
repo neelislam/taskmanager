@@ -103,7 +103,9 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
   void _onTapSignInButton(){
-
+if(_formKey.currentState!.validate()){
+  //sign in with api
+}
   }
 
   void _onTapForgotPasswordButton(){
