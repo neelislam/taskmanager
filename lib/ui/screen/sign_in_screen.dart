@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -122,7 +123,7 @@ if(_formKey.currentState!.validate()){
 
 
   void _onTapSignUpButton(){
-
+      Navigator.pushNamed(context, SignUpScreen.name);
   }
  @override
   void dispose() {
