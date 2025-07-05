@@ -6,6 +6,10 @@ import 'package:taskmanager/ui/widgets/screen_background.dart';
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
+
+  static const String name = '/sign-in';
+
+
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 
