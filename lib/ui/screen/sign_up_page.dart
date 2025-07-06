@@ -135,7 +135,7 @@ class _SignInScreenState extends State<SignUpScreen> {
 
 
   void _onTapSignInButton(){
-
+  Navigator.pop(context);
   }
   @override
   void dispose() {
