@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,6 +20,9 @@ class SignUpScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignUpScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -52,22 +56,23 @@ class _SignInScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 8,),
                   TextFormField(
-                      controller: _emailTEController,
+                      controller: _firstNameController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration( hintText:'First name',
                       ),
                   ),
                   const SizedBox(height: 8,),
                   TextFormField(
-                    controller: _emailTEController,
+                    controller: _lastNameController,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration( hintText:'Last name',
                     ),
                   ),
                   const SizedBox(height: 8,),
                   TextFormField(
-                      controller: _passwordTEController,
-                      obscureText: true,
+                      controller: _mobileController,
+                     textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText:'Mobile',
                       ),
@@ -75,6 +80,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                   const SizedBox(height: 8,),
                   TextFormField(
                       controller: _passwordTEController,
+                      textInputAction: TextInputAction.done,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText:'Password',
