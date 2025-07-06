@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/screen/splash_screen.dart';
@@ -67,6 +68,7 @@ elevatedButtonTheme: ElevatedButtonThemeData(
         SplashScreen.name : (context) => SplashScreen(),
         SignInScreen.name : (context) => SignInScreen(),
         SignUpScreen.name : (context) => SignUpScreen(),
+        ForgotPasswordEmailAddress.name : (context) => ForgotPasswordEmailAddress(),
       },
     );
   }
