@@ -1,9 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import '../widgets/screen_background.dart';
-import 'fp_ur_email.dart' as _emailController;
 
 class ForgotPasswordEmailAddress extends StatefulWidget {
   const ForgotPasswordEmailAddress({super.key});
@@ -12,10 +11,8 @@ class ForgotPasswordEmailAddress extends StatefulWidget {
   State<ForgotPasswordEmailAddress> createState() =>
       _ForgotPasswordEmailAddressState();
 }
-
 class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress> {
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _mobileController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,6 +30,12 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                 children: [
                   const SizedBox(height: 80,),
                   Text('Your Email Address', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 10,),
+                  Text('A 6 digit code will send to your email address',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: Colors.grey,
+                      )),
+
                   const SizedBox(height: 24,),
                   TextFormField(
                       controller: _emailController,
@@ -50,7 +53,7 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                   ),
                   const SizedBox(height: 8,),
                   ElevatedButton(
-                    onPressed: _onTapNextPage,
+                    onPressed: _onTapSubmitButton,
                     child: Icon(Icons.arrow_circle_right_outlined),
                   ),
                   const SizedBox(height: 32,),
@@ -61,8 +64,12 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                           color: Colors.black,
                           letterSpacing: 0.4,
                         ),
+
+
                         children: [
+
                           TextSpan(
+
                             text: 'Sign-in',
                             style: TextStyle(
                               color: Colors.pink,
@@ -81,20 +88,26 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
           ),
         ),
       ),
-    );;
+    );
   }
+  void _onTapSubmitButton (){
+
+  }
+
+  void _onTapSignInButton(){
+    Navigator.pushNamed(context, SignInScreen.name);
+
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
 }
 
-void _onTapSignInButton(){
-
-}
-
-void _onTapNextPage (){
-
-}
 
 
-@override
-void dispose() {
-  _emailController.dispose();
-}
+
+

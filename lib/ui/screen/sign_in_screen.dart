@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
@@ -118,6 +119,7 @@ if(_formKey.currentState!.validate()){
   }
 
   void _onTapForgotPasswordButton(){
+    Navigator.pushNamed((context), ForgotPasswordEmailAddress.name);
 
   }
 
