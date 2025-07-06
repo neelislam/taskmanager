@@ -94,13 +94,13 @@ class _SignInScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 16,),
                   ElevatedButton(
-                    onPressed: _onTapSignInButton,
+                    onPressed: _onTapSignUpButton,
                     child: Icon(Icons.arrow_circle_right_outlined),
                   ),
                   const SizedBox(height: 32,),
                   Center(
                     child: RichText(text: TextSpan(
-                        text: "Don't have an account?",
+                        text: "Have an account?",
                         style: TextStyle(
                           color: Colors.black,
                           letterSpacing: 0.4,
@@ -112,7 +112,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                               color: Colors.pink,
                               fontWeight: FontWeight.w700,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton,
+                            recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton,
                           ),
 
                         ]
@@ -127,18 +127,14 @@ class _SignInScreenState extends State<SignUpScreen> {
       ),
     );
   }
-  void _onTapSignInButton(){
+  void _onTapSignUpButton(){
     if(_formKey.currentState!.validate()){
       //sign in with api
     }
   }
 
-  void _onTapForgotPasswordButton(){
 
-  }
-
-
-  void _onTapSignUpButton(){
+  void _onTapSignInButton(){
 
   }
   @override
