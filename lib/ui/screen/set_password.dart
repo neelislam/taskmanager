@@ -1,22 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:taskmanager/ui/screen/set_password.dart';
+import 'package:taskmanager/ui/screen/pin_verification_screen.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 
 import '../widgets/screen_background.dart';
-class PinVerificationScreen extends StatefulWidget {
-  const PinVerificationScreen({super.key});
-  static const String name = '/PinVerification';
+
+class SetPassword extends StatefulWidget {
+  const SetPassword({super.key});
+  static const String name = '/setPassword';
+
+
   @override
-  State<PinVerificationScreen> createState() => _PinVerificationScreenState();
-
-
+  State<SetPassword> createState() => _SetPasswordState();
 }
 
-class _PinVerificationScreenState extends State<PinVerificationScreen> {
-  final TextEditingController _otpTEController = TextEditingController();
+class _SetPasswordState extends State<SetPassword> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,37 +33,31 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 80,),
-                  Text('Pin Verification', style: Theme.of(context).textTheme.titleLarge),
+                  Text('Set Password', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 10,),
-                  Text('A 6 digit code has been sent to your email address',
+                  Text('Enter a password that contains more than 6 digit with special character, (a-z) and (A-Z)',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Colors.grey,
                       )),
 
                   const SizedBox(height: 24,),
-                  PinCodeTextField(
-                    length: 6,
-                    animationType: AnimationType.fade,
-                    keyboardType: TextInputType.number,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      activeFillColor: Colors.white,
-                      selectedColor: Colors.green,
-                      inactiveColor: Colors.blue,
+                  TextFormField(
+                      controller: _passwordController,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration( hintText:'Password',
+                      ),
+                  ),
+                  const SizedBox(height: 5,),
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration( hintText:'Confirm password',
                     ),
-                    animationDuration: Duration(milliseconds: 300),
-                    backgroundColor: Colors.transparent,
-                    controller: _otpTEController,
-
-                    appContext: context,
                   ),
                   const SizedBox(height: 8,),
                   ElevatedButton(
                     onPressed: _onTapSubmitButton,
-                    child: Text('Verify'),
+                    child: Icon(Icons.arrow_circle_right_outlined),
                   ),
                   const SizedBox(height: 32,),
                   Center(
@@ -96,22 +92,22 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         ),
       ),
     );
-
   }
-
   void _onTapSubmitButton (){
-Navigator.pushNamed(context, SetPassword.name);
+    Navigator.pushNamed(context, SignInScreen.name);
   }
 
   void _onTapSignInButton(){
-    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate) => false);
+    Navigator.pushNamed(context, SignInScreen.name);
 
   }
 
   @override
   void dispose() {
-    _otpTEController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
 }
+
