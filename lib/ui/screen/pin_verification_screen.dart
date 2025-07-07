@@ -1,21 +1,21 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:taskmanager/ui/screen/pin_verification_screen.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
-import '../widgets/screen_background.dart';
 
-class ForgotPasswordEmailAddress extends StatefulWidget {
-  const ForgotPasswordEmailAddress({super.key});
-  static const String name = '/ForgotPasswordEA';
+import '../widgets/screen_background.dart';
+class PinVerificationScreen extends StatefulWidget {
+  const PinVerificationScreen({super.key});
+  static const String name = '/PinVerification';
   @override
-  State<ForgotPasswordEmailAddress> createState() =>
-      _ForgotPasswordEmailAddressState();
+  State<PinVerificationScreen> createState() => _PinVerificationScreenState();
+
+
 }
-class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress> {
+
+class _PinVerificationScreenState extends State<PinVerificationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +30,9 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 80,),
-                  Text('Your Email Address', style: Theme.of(context).textTheme.titleLarge),
+                  Text('Pin Verification', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 10,),
-                  Text('A 6 digit code will send to your email address',
+                  Text('A 6 digit code has been sent to your email address',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Colors.grey,
                       )),
@@ -41,7 +41,7 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                   TextFormField(
                       controller: _emailController,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration( hintText:'Email',
+                      decoration: InputDecoration( hintText:'Pin',
                       ),
                       validator:(String? value){
                         String email = value ?? '';
@@ -55,7 +55,7 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
                   const SizedBox(height: 8,),
                   ElevatedButton(
                     onPressed: _onTapSubmitButton,
-                    child: Icon(Icons.arrow_circle_right_outlined),
+                    child: Text('Verify'),
                   ),
                   const SizedBox(height: 32,),
                   Center(
@@ -90,13 +90,15 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
         ),
       ),
     );
+
   }
+
   void _onTapSubmitButton (){
-  Navigator.pushNamed(context, PinVerificationScreen.name);
+
   }
 
   void _onTapSignInButton(){
-    Navigator.pushNamed(context, SignInScreen.name);
+    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate) => false);
 
   }
 
@@ -107,8 +109,3 @@ class _ForgotPasswordEmailAddressState extends State<ForgotPasswordEmailAddress>
   }
 
 }
-
-
-
-
-
