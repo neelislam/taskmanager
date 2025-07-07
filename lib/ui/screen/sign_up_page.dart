@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -139,7 +138,6 @@ class _SignInScreenState extends State<SignUpScreen> {
   }
   @override
   void dispose() {
-    // TODO: implement dispose
     _mobileController.dispose();
     _lastNameController.dispose();
     _firstNameController.dispose();
