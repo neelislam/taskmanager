@@ -5,6 +5,8 @@ import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
+import 'main_nav_bar_screen.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -116,10 +118,12 @@ class _SignInScreenState extends State<SignInScreen> {
 if(_formKey.currentState!.validate()){
   //sign in with api
 }
+Navigator.pushNamedAndRemoveUntil(context, (MainNavBarScreen.name), (predicate)=>false); // predicate false means wont keep the before screen
   }
 
   void _onTapForgotPasswordButton(){
-    Navigator.pushNamed((context), ForgotPasswordEmailAddress.name);
+    Navigator.pushNamed((context),
+        ForgotPasswordEmailAddress.name);
 
   }
 
