@@ -13,9 +13,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return TaskCard(title: 'Cancelled',
-              count: 7,
-              taskButtonColor: Colors.purpleAccent);
+          return TaskCard(taskType: TaskType.progress,);
         },
       ),
     );

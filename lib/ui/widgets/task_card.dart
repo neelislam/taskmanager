@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
+enum TaskType{
+  tNew,
+  progress,
+  complete,
+  cancelled
+}
+
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
-    super.key, required this.title, required this.count, this.taskButtonColor,
+    super.key, required this.taskType,
   });
+final TaskType taskType;
 
-  final String title;
-  final int count;
-  final Color? taskButtonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +43,14 @@ class TaskCard extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    'New',
+                    _getTaskTypeName(),
                     style: TextStyle(color: Colors.white),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: taskButtonColor,
+                  backgroundColor:  _getTaskChipColor(),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(
-                      20,
-                    ),
+                    borderRadius: BorderRadiusGeometry.circular(20,),
+                  side: BorderSide.none,
                   ),
                 ),
                 Spacer(),
@@ -64,5 +68,35 @@ class TaskCard extends StatelessWidget {
         ),
       ),
     );
+
+
+
+  }
+  Color _getTaskChipColor(){
+    if(taskType == TaskType.tNew){
+      return Colors.blue;
+    } else if(taskType == TaskType.progress){
+      return Colors.purpleAccent;
+    } else if(taskType == TaskType.complete){
+      return Colors.lightGreenAccent;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  String _getTaskTypeName(){
+    switch (taskType){
+      case TaskType.tNew:
+        return 'New';
+      case TaskType.progress:
+        return 'Progress';
+
+      case TaskType.complete:
+        return 'Completed';
+
+      case TaskType.cancelled:
+        return 'Cancelled';
+
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/pin_verification_screen.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -128,7 +129,8 @@ class _SignInScreenState extends State<SignUpScreen> {
   }
   void _onTapSignUpButton(){
     if(_formKey.currentState!.validate()){
-      //sign in with api
+      Navigator.pushNamed((context),
+          PinVerificationScreen.name);
     }
   }
 

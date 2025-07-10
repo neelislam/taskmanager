@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/main_nav_bar_screen.dart';
 import 'package:taskmanager/ui/screen/pin_verification_screen.dart';
@@ -74,6 +75,7 @@ elevatedButtonTheme: ElevatedButtonThemeData(
         PinVerificationScreen.name : (context) => PinVerificationScreen(),
         SetPassword.name : (context) => SetPassword(),
         MainNavBarScreen.name : (context) => MainNavBarScreen(),
+        AddNewTaskScreen.name : (context) => AddNewTaskScreen(),
       },
     );
   }

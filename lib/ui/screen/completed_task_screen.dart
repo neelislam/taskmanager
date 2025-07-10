@@ -17,9 +17,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return TaskCard(title: 'Cancelled',
-              count: 7,
-              taskButtonColor: Colors.green );
+          return TaskCard(taskType: TaskType.complete,);
         },
       ),
     );

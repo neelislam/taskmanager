@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 
 import '../widgets/task_card.dart';
 import '../widgets/task_counter_widgets.dart';
@@ -34,9 +35,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return TaskCard(title: 'Cancelled',
-                      count: 7,
-                      taskButtonColor: Colors.lightBlue);
+                  return TaskCard(taskType: TaskType.tNew,);
                 },
               ),
             ),
@@ -50,6 +49,8 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     );
   }
 
-  void _onTapAddNewTaskButton() {}
+  void _onTapAddNewTaskButton() {
+    Navigator.pushNamed(context, AddNewTaskScreen.name);
+  }
 }
 
