@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
-    super.key,
+    super.key, required this.title, required this.count,
   });
+
+  final String title;
+  final int count;
 
   @override
   Widget build(BuildContext context) {

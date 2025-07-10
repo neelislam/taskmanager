@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+
 import '../widgets/task_card.dart';
-class ProgressTaskScreen extends StatefulWidget {
-  const ProgressTaskScreen({super.key});
+
+class CancelledTaskScreen extends StatefulWidget {
+  const CancelledTaskScreen({super.key});
+
   @override
-  State<ProgressTaskScreen> createState() => _ProgressTaskScreenState();
+  State<CancelledTaskScreen> createState() => _CancelledTaskScreenState();
 }
-class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
+
+class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,7 +17,8 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return TaskCard(title: 'On the go', count: 2,);
+          return TaskCard(title: 'Cancelled',
+            count: 7,);
         },
       ),
     );
