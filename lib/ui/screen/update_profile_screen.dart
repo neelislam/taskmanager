@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/screen_background.dart';
+import '../widgets/task_manager_appbar.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -19,6 +19,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TaskManagerAppBar(),
       body: ScreenBackground(
         child: SingleChildScrollView(
           child: Padding(
@@ -29,8 +30,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 80,),
-                  Text('Join with us', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 40,),
+                  Text('Update Profile', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 24,),
                   TextFormField(
 
@@ -87,28 +88,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     onPressed: (){},
                     child: Icon(Icons.arrow_circle_right_outlined),
                   ),
-                  const SizedBox(height: 32,),
-                  Center(
-                    child: RichText(text: TextSpan(
-                        text: "Have an account?",
-                        style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 0.4,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Sign-in',
-                            style: TextStyle(
-                              color: Colors.pink,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            recognizer: TapGestureRecognizer()..onTap = (){},
-                          ),
-
-                        ]
-                    ),
-                    ),
-                  )
                 ],
               ),
             ),

@@ -57,6 +57,7 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   // Modified to accept BuildContext
   void _onTapProfileAppBar(BuildContext context){
+    //if(TaskManagerApp.navigator.currentState!.)
     Navigator.pushNamed(context, UpdateProfileScreen.name);
   }
 }
