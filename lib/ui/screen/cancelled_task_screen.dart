@@ -18,7 +18,8 @@ class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
         itemCount: 10,
         itemBuilder: (context, index) {
           return TaskCard(title: 'Cancelled',
-            count: 7,);
+            count: 7,
+              taskButtonColor: Colors.redAccent);
         },
       ),
     );

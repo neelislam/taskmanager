@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
-    super.key, required this.title, required this.count,
+    super.key, required this.title, required this.count, this.taskButtonColor,
   });
 
   final String title;
   final int count;
+  final Color? taskButtonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class TaskCard extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  backgroundColor: Colors.lightGreenAccent,
+                  backgroundColor: taskButtonColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(
                       20,

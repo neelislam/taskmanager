@@ -34,8 +34,9 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return TaskCard(title: 'New Task',
-                    count: 5,);
+                  return TaskCard(title: 'Cancelled',
+                      count: 7,
+                      taskButtonColor: Colors.lightBlue);
                 },
               ),
             ),
