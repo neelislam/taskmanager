@@ -7,6 +7,7 @@ import 'package:taskmanager/ui/screen/set_password.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/screen/splash_screen.dart';
+import 'package:taskmanager/ui/screen/update_profile_screen.dart';
 class TaskManagerApp extends StatefulWidget {
   const TaskManagerApp({super.key});
 
@@ -76,6 +77,7 @@ elevatedButtonTheme: ElevatedButtonThemeData(
         SetPassword.name : (context) => SetPassword(),
         MainNavBarScreen.name : (context) => MainNavBarScreen(),
         AddNewTaskScreen.name : (context) => AddNewTaskScreen(),
+        UpdateProfileScreen.name : (context) => UpdateProfileScreen(),
       },
     );
   }
