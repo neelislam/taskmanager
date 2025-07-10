@@ -21,7 +21,7 @@ class TaskCounterWidgets extends StatelessWidget {
             Text('$count',
               style:
               Theme.of(context).textTheme.titleLarge,),
-            Text(title),
+            Text(title, maxLines: 1,),
           ],
         ),
       ),
