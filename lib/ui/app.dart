@@ -6,15 +6,14 @@ import 'package:taskmanager/ui/screen/set_password.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/screen/splash_screen.dart';
-
-class taskmanagerapp extends StatefulWidget {
-  const taskmanagerapp({super.key});
+class TaskManagerApp extends StatefulWidget {
+  const TaskManagerApp({super.key});
 
   @override
-  State<taskmanagerapp> createState() => _taskmanagerappState();
+  State<TaskManagerApp> createState() => _taskmanagerappState();
 }
 
-class _taskmanagerappState extends State<taskmanagerapp> {
+class _taskmanagerappState extends State<TaskManagerApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

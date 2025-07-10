@@ -20,15 +20,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState(){
     super.initState();
-    _moveToNextScreen(); //  2 sec wait kore ei function k auto call dibe
+    _moveToNextScreen(); //  2 sec wait kore ei function k auto call
 
 
   }
 
 
   Future<void> _moveToNextScreen() async{
-    await Future.delayed(Duration(seconds: 2)); // 2 sec wait kore onno screen e jabe
-    //kivabe? Navigator push use
+    await Future.delayed(Duration(seconds: 2));
     Navigator.pushReplacementNamed(context, SignInScreen.name );
   }
 

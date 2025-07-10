@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class NewTaskListScreen extends StatefulWidget {
   const NewTaskListScreen({super.key});
 
@@ -9,6 +10,15 @@ class NewTaskListScreen extends StatefulWidget {
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(children: [
+      Card(
+        elevation: 0,
+        child: Column(
+          children: [
+
+          ],
+        ),
+      )
+    ]);
   }
 }
