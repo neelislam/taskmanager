@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/ui/screen/update_profile_screen.dart';
 
+import '../app.dart';
+
 class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TaskManagerAppBar({
     super.key,
@@ -57,7 +59,8 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   // Modified to accept BuildContext
   void _onTapProfileAppBar(BuildContext context){
-    //if(TaskManagerApp.navigator.currentState!.)
-    Navigator.pushNamed(context, UpdateProfileScreen.name);
+   if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name){
+     Navigator.pushNamed(context, UpdateProfileScreen.name);
+   }
   }
 }

@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   email_validator: ^3.0.0
   pin_code_fields: ^8.0.1
+  image_picker: ^1.1.2
 
 
   flutter_svg: ^2.2.0
