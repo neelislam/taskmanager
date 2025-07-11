@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/ui/screen/update_profile_screen.dart';
 
-import '../app.dart';
-
 class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TaskManagerAppBar({
     super.key,
