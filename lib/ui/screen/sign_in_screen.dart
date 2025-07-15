@@ -10,14 +10,10 @@ import 'main_nav_bar_screen.dart';
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
-
   static const String name = '/sign-in';
-
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
-
-
 }
 
 class _SignInScreenState extends State<SignInScreen> {
@@ -37,75 +33,76 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 80,),
-                  Text('Get Started With', style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 24,),
+                  const SizedBox(height: 80),
+                  Text(
+                    'Get Started With',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 24),
                   TextFormField(
                     controller: _emailTEController,
                     textInputAction: TextInputAction.next,
-                    decoration: InputDecoration( hintText:'Email',
-                  ),
-                      validator:(String? value){
+                    decoration: InputDecoration(hintText: 'Email'),
+                    validator: (String? value) {
                       String email = value ?? '';
 
-                      if(EmailValidator.validate(email) == false){
+                      if (EmailValidator.validate(email) == false) {
                         return 'Enter a valid email';
                       }
-                        return null;
-                      }
+                      return null;
+                    },
                   ),
-                  const SizedBox(height: 8,),
+                  const SizedBox(height: 8),
                   TextFormField(
                     controller: _passwordTEController,
                     obscureText: true,
-                    decoration: InputDecoration(
-                      hintText:'Password',
-                    ),
-                      validator:(String? value){
-                        if((value?.length ?? 0)< 6){
-                          return 'Enter a valid Password of minimum 7 length';
-                        }
-                        return null;
+                    decoration: InputDecoration(hintText: 'Password'),
+                    validator: (String? value) {
+                      if ((value?.length ?? 0) < 6) {
+                        return 'Enter a valid Password of minimum 7 length';
                       }
+                      return null;
+                    },
                   ),
-                  const SizedBox(height: 16,),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _onTapSignInButton,
                     child: Icon(Icons.arrow_circle_right_outlined),
                   ),
-                  const SizedBox(height: 32,),
+                  const SizedBox(height: 32),
                   Center(
                     child: Column(
                       children: [
-                        TextButton(onPressed: _onTapForgotPasswordButton,
-                            child: Text('Forgot Password?',
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                            )
-                        ),
-                        RichText(text: TextSpan(
-                          text: "Don't have an account?",
-                          style: TextStyle(
-                            color: Colors.black,
-                            letterSpacing: 0.4,
+                        TextButton(
+                          onPressed: _onTapForgotPasswordButton,
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(color: Colors.deepOrange),
                           ),
-                          children: [
-                            TextSpan(
-                              text: 'Sign-up',
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton,
-                            ),
-                        
-                          ]
                         ),
+                        RichText(
+                          text: TextSpan(
+                            text: "Don't have an account?",
+                            style: TextStyle(
+                              color: Colors.black,
+                              letterSpacing: 0.4,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Sign-up',
+                                style: TextStyle(
+                                  color: Colors.pink,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = _onTapSignUpButton,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -114,30 +111,31 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-  void _onTapSignInButton(){
-if(_formKey.currentState!.validate()){
-  //sign in with api
-}
-Navigator.pushNamedAndRemoveUntil(context, (MainNavBarScreen.name), (predicate)=>false); // predicate false means wont keep the before screen
+
+  void _onTapSignInButton() {
+    if (_formKey.currentState!.validate()) {
+      //sign in with api
+    }
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      (MainNavBarScreen.name),
+      (predicate) => false,
+    ); // predicate false means wont keep the before screen
   }
 
-  void _onTapForgotPasswordButton(){
-    Navigator.pushNamed((context),
-        ForgotPasswordEmailAddress.name);
-
+  void _onTapForgotPasswordButton() {
+    Navigator.pushNamed((context), ForgotPasswordEmailAddress.name);
   }
 
-
-  void _onTapSignUpButton(){
-      Navigator.pushNamed(context, SignUpScreen.name);
+  void _onTapSignUpButton() {
+    Navigator.pushNamed(context, SignUpScreen.name);
   }
- @override
+
+  @override
   void dispose() {
     // TODO: implement dispose
-   _emailTEController.dispose();
-   _passwordTEController.dispose();
+    _emailTEController.dispose();
+    _passwordTEController.dispose();
     super.dispose();
   }
-
-
 }

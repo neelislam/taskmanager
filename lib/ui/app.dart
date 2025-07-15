@@ -11,7 +11,6 @@ import 'package:taskmanager/ui/screen/update_profile_screen.dart';
 class TaskManagerApp extends StatefulWidget {
   const TaskManagerApp({super.key});
 
-  // Corrected spelling from NavigatorState to NavigatorState
   static GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
 
   @override
