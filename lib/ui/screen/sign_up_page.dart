@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
 
@@ -181,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> { // Changed class name to 
       _clearTextField();
       showSnackBarMessage(
         context,
-        'Registration has been successful. Please login', // Corrected typo
+        'Registration has been successful. Please login',
       );
     } else {
       showSnackBarMessage(context, response.errorMessage ?? 'Registration failed! Please try again.'); // Added fallback error message
