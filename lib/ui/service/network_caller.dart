@@ -2,19 +2,17 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-
-
 class NetworkResponse{
   final bool isSuccess;
   final int statusCode;
-  final Map<String, dynamic> body;
-  final dynamic errorMessage;
+  final Map<String, dynamic>? body;
+  final String? errorMessage;
 
   NetworkResponse({
     required this.isSuccess,
     required this.statusCode,
-    required this.body,
-    required this.errorMessage
+    this.body,
+    this.errorMessage
   });
 }
 
@@ -37,7 +35,8 @@ class NetworkCaller{
           isSuccess: false,
           statusCode: response.statusCode,
           errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
-          body: {},
+
+
 
         );
       }
@@ -45,8 +44,7 @@ class NetworkCaller{
     catch (e){
       return NetworkResponse(isSuccess: false,
           statusCode: -1,
-          errorMessage: e.toString(),
-          body: {}
+          errorMessage: e.toString()
       );
     }
   }
@@ -75,7 +73,6 @@ class NetworkCaller{
           isSuccess: false,
           statusCode: response.statusCode,
           errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
-          body: {},
 
         );
       }
@@ -84,7 +81,6 @@ class NetworkCaller{
       return NetworkResponse(isSuccess: false,
           statusCode: -1,
           errorMessage: e.toString(),
-          body: {}
       );
     }
   }
