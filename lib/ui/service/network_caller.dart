@@ -50,4 +50,44 @@ class NetworkCaller{
       );
     }
   }
+
+
+
+  static Future<NetworkResponse> postRequest({required String url, Map<String, String>? body}) async {
+    try {
+      Uri uri = Uri.parse(url);
+      Response response = await post(
+          uri,
+          headers: {
+            'content-type' : 'application/json'
+          },
+          body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(isSuccess: true,
+            statusCode: response.statusCode,
+            body: decodedJson,
+            errorMessage: null);
+      }
+      else {
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
+          body: {},
+
+        );
+      }
+    }
+    catch (e){
+      return NetworkResponse(isSuccess: false,
+          statusCode: -1,
+          errorMessage: e.toString(),
+          body: {}
+      );
+    }
+  }
 }
+
+
