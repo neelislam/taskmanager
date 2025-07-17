@@ -1,12 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
 import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
 
+import '../../data/models/user_model.dart';
 import '../../data/urls.dart';
 import 'main_nav_bar_screen.dart';
 
@@ -147,6 +149,12 @@ class _SignInScreenState extends State<SignInScreen> {
   body: requestBody,);
 
   if(response.isSuccess){
+  UserModel userModel = UserModel.fromJson(response.body!['data']);
+  String token = response.body!['token'];
+
+  
+
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       (MainNavBarScreen.name),
