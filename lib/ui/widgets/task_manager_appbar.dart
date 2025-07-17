@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/ui/controllers/auth_controller.dart';
+import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import 'package:taskmanager/ui/screen/update_profile_screen.dart';
 
 class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -7,11 +9,11 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Widget build(BuildContext context) { // context is available here
+  Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.greenAccent,
       title: GestureDetector(
-        onTap: () { // Wrap _onTapProfileAppBar in an anonymous function to pass context
+        onTap: () {
           _onTapProfileAppBar(context);
         },
         child: Row(
@@ -21,7 +23,7 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [ // Added const here as children are constant
                     Text('Neel Islam',
                       style:
                       TextStyle(
@@ -44,7 +46,11 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
               ),
             ),
-            IconButton(onPressed: (){},  icon: Icon(Icons.logout),
+            IconButton(
+              onPressed: () {
+                _onTapLogoutButton(context); // Pass context to the logout function
+              },
+              icon: const Icon(Icons.logout), // Added const for the icon
             )
           ],
         ),
@@ -53,12 +59,16 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight); //Will keep a fixed height for the appbar in every screen
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // Added const
 
-  // Modified to accept BuildContext
+  Future<void> _onTapLogoutButton(BuildContext context) async {
+    await  AuthController.clearData();
+    Navigator.pushNamed(context, SignInScreen.name);
+  }
+
   void _onTapProfileAppBar(BuildContext context){
-   if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name){
-     Navigator.pushNamed(context, UpdateProfileScreen.name);
-   }
+    if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name){
+      Navigator.pushNamed(context, UpdateProfileScreen.name);
+    }
   }
 }

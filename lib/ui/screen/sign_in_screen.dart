@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
+import 'package:taskmanager/ui/controllers/auth_controller.dart';
 import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
@@ -152,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
   UserModel userModel = UserModel.fromJson(response.body!['data']);
   String token = response.body!['token'];
 
-  
+  AuthController.saveUserData(userModel, token as Stream);
 
 
     Navigator.pushNamedAndRemoveUntil(
