@@ -28,7 +28,6 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Safely access firstName and lastName, provide default if null
                     Text(
                       user != null
                           ? '${user.firstName ?? ''} ${user.lastName ?? ''}' // Use fullName getter or combine
