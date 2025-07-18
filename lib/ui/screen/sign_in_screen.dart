@@ -1,9 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
-import 'package:taskmanager/ui/controllers/auth_controller.dart';
+import 'package:taskmanager/ui/controllers/auth_controller.dart'; // This is where the AuthController is
 import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
@@ -67,23 +66,21 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: InputDecoration(hintText: 'Password'),
                     validator: (String? value) {
                       if ((value?.length ?? 0) < 6) {
-                        return 'Enter a valid Password of minimum 7 length';
+                        return 'Enter a valid Password of minimum 6 length'; // Changed to 6 as per validator
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
-                  
+
                   Visibility(
                     visible: _signInProgress == false,
-                    replacement: Center(
-                      child: CircularProgressIndicator(
-
-                      ),
+                    replacement: const Center( // Added const for CircularProgressIndicator
+                      child: CircularProgressIndicator(),
                     ),
                     child: ElevatedButton(
                       onPressed: _onTapSignInButton,
-                      child: Icon(Icons.arrow_circle_right_outlined),
+                      child: const Icon(Icons.arrow_circle_right_outlined), // Added const
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -92,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         TextButton(
                           onPressed: _onTapForgotPasswordButton,
-                          child: Text(
+                          child: const Text( // Added const
                             'Forgot Password?',
                             style: TextStyle(color: Colors.deepOrange),
                           ),
@@ -100,14 +97,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         RichText(
                           text: TextSpan(
                             text: "Don't have an account?",
-                            style: TextStyle(
+                            style: const TextStyle( // Added const
                               color: Colors.black,
                               letterSpacing: 0.4,
                             ),
                             children: [
                               TextSpan(
                                 text: 'Sign-up',
-                                style: TextStyle(
+                                style: const TextStyle( // Added const
                                   color: Colors.pink,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -131,48 +128,48 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _onTapSignInButton() {
     if (_formKey.currentState!.validate()) {
-     _signIn();
-
+      _signIn();
     }
   }
 
-  Future<void> _signIn() async{
-  _signInProgress = true;
-  setState(() {});
+  Future<void> _signIn() async {
+    _signInProgress = true;
+    setState(() {});
 
-  Map<String, String> requestBody ={
-    "email" : _emailTEController.text.trim(),
-    "password" : _passwordTEController.text.trim(),
-  };
+    Map<String, String> requestBody = {
+      "email": _emailTEController.text.trim(),
+      "password": _passwordTEController.text.trim(),
+    };
 
-  NetworkResponse response = await NetworkCaller.postRequest(
+    NetworkResponse response = await NetworkCaller.postRequest(
       url: Urls.loginUrl,
-  body: requestBody,);
-
-  if(response.isSuccess){
-  UserModel userModel = UserModel.fromJson(response.body!['data']);
-  String token = response.body!['token'];
-
-  AuthController.saveUserData(userModel, token as Stream);
-
-
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      (MainNavBarScreen.name),
-          (predicate) => false,      // predicate false means won't keep the before screen
-
+      body: requestBody,
     );
-  } else {
-    _signInProgress = false;
-    setState(() {
 
-    });
-    showSnackBarMessage(context, response.errorMessage!);
-  }
+    if (response.isSuccess) {
+      UserModel userModel = UserModel.fromJson(response.body!['data']);
+      String token = response.body!['token'];
+
+      // Pass the String token directly.
+      // Ensure AuthController.saveUserData expects a String token.
+      await AuthController.saveUserData(userModel, token);
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        MainNavBarScreen.name, // Corrected to use directly
+            (predicate) => false,
+      );
+    } else {
+      _signInProgress = false;
+      setState(() {
+        // Update UI to hide progress indicator on failure
+      });
+      showSnackBarMessage(context, response.errorMessage!);
+    }
   }
 
   void _onTapForgotPasswordButton() {
-    Navigator.pushNamed((context), ForgotPasswordEmailAddress.name);
+    Navigator.pushNamed(context, ForgotPasswordEmailAddress.name);
   }
 
   void _onTapSignUpButton() {
@@ -181,7 +178,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _emailTEController.dispose();
     _passwordTEController.dispose();
     super.dispose();

@@ -10,6 +10,9 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the user model from AuthController, safely handling null
+    final user = AuthController.userModel;
+
     return AppBar(
       backgroundColor: Colors.greenAccent,
       title: GestureDetector(
@@ -18,34 +21,34 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         child: Row(
           children: [
-            CircleAvatar(),
+            // Display CircleAvatar, you might want to add user profile picture here
+            const CircleAvatar(),
             const SizedBox(width: 14,),
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [ // Added const here as children are constant
+                  children: [
+                    // Safely access firstName and lastName, provide default if null
                     Text(
-                      'AuthController.userModel!.firstName',
-                      style:
-                      const TextStyle(
+                      user != null
+                          ? '${user.firstName ?? ''} ${user.lastName ?? ''}' // Use fullName getter or combine
+                          : 'Guest User', // Default text if user is null
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
-
                       ),
                     ),
+                    // Safely access email, provide default if null
                     Text(
-                      AuthController.userModel!.email,
-                      style:
-                      const TextStyle(
+                      user?.email ?? 'No Email', // Use null-aware access and default
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
-
                       ),
                     ),
                   ]
-
               ),
             ),
             IconButton(
@@ -64,12 +67,13 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight); // Added const
 
   Future<void> _onTapLogoutButton(BuildContext context) async {
-    await  AuthController.clearData();
-    Navigator.pushNamed(context, SignInScreen.name);
+    await AuthController.clearData();
+    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (route) => false); // Navigate and clear back stack
   }
 
   void _onTapProfileAppBar(BuildContext context){
-    if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name){
+    // Ensure context is valid and route settings are available
+    if(ModalRoute.of(context)?.settings.name != UpdateProfileScreen.name){
       Navigator.pushNamed(context, UpdateProfileScreen.name);
     }
   }

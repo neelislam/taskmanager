@@ -1,34 +1,35 @@
 class UserModel{
-     late String id;
-     late String email;
-     late String firstName;
-     late String lastName;
-     late String mobile;
+  String? id; // Made nullable
+  String? email; // Corrected key and made nullable
+  String? firstName; // Corrected key and made nullable
+  String? lastName; // Made nullable
+  String? mobile; // Made nullable
+  String? createdDate; // Added and made nullable
 
-String get fullName{
- return '$firstName $lastName';
-}
+  String get fullName {
+    // Safely access firstName and lastName, providing empty string if null
+    return '${firstName ?? ''} ${lastName ?? ''}';
+  }
 
+  // Json to dart format conversion
+  UserModel.fromJson(Map<String, dynamic> jsonData) {
+    id = jsonData['_id'];
+    email = jsonData['email']; // Corrected from '_email' to 'email'
+    firstName = jsonData['firstName']; // Corrected from 'firstname' to 'firstName'
+    lastName = jsonData['lastName'];
+    mobile = jsonData['mobile'];
+    createdDate = jsonData['createdDate']; // Added parsing for createdDate
+  }
 
-     // Json to dart format conversion
-     UserModel.fromJson(Map<String, dynamic>jsonData){
-       id = jsonData['_id'];
-       email = jsonData['_email'];
-       firstName = jsonData['firstname'];
-       lastName = jsonData['lastName'];
-       mobile =  jsonData['mobile'];
-
-     }
-
-
-     //dart to Json format conversion
-     Map<String, dynamic> toJson(){
-       return{
-         'id': id,
-         'email' : email,
-         'firstName' : firstName,
-         'lastName' : lastName,
-         'mobile' : mobile
-       };
-     }
+  // dart to Json format conversion
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id, // Using _id to match API response for consistency
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'mobile': mobile,
+      'createdDate': createdDate, // Added to toJson
+    };
+  }
 }
