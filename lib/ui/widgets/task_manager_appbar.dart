@@ -25,7 +25,7 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [ // Added const here as children are constant
                     Text(
-                      '${AuthController.userModel!.firstName} ${AuthController.userModel!.lastName}' ,
+                      'AuthController.userModel!.firstName',
                       style:
                       const TextStyle(
                         fontSize: 16,

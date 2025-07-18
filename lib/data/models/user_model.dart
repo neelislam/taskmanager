@@ -5,7 +5,9 @@ class UserModel{
      late String lastName;
      late String mobile;
 
-
+String get fullName{
+ return '$firstName $lastName';
+}
 
 
      // Json to dart format conversion
