@@ -23,19 +23,20 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [ // Added const here as children are constant
-                    Text('Neel Islam',
+                  children: [ // Added const here as children are constant
+                    Text(
+                      AuthController.userModel!.firstName,
                       style:
-                      TextStyle(
+                      const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
 
                       ),
                     ),
-                    Text('neelislam@gmail.com',
-                      style:
-                      TextStyle(
+                    Text(
+                      AuthController.userModel!.email,                      style:
+                      const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
