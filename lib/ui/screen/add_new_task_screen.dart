@@ -79,7 +79,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   }
 
   void _onTapSubmitButton() {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      _addNewTask();
+    }
     // Navigator.pop(context);
   }
 
@@ -96,8 +98,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     NetworkResponse response = await NetworkCaller.postRequest(
       url: Urls.loginUrl,
       body: requestBody,
+
     );
-  _addNewTaskInProgress = true;
+  _addNewTaskInProgress = false;
   setState(() {});
     if(response.isSuccess){
     _titleTEController.clear();

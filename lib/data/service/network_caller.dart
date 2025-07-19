@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:taskmanager/ui/controllers/auth_controller.dart';
 
 class NetworkResponse{
   final bool isSuccess;
@@ -21,7 +22,9 @@ class NetworkCaller{
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
       Uri uri = Uri.parse(url);
-      _logRequest(url, null);
+
+
+      _logRequest(url, null, null);
       Response response = await get(uri);
       _logResponse(url, response);
       if (response.statusCode == 200) {
@@ -56,13 +59,15 @@ class NetworkCaller{
   static Future<NetworkResponse> postRequest({required String url, Map<String, String>? body}) async {
     try {
       Uri uri = Uri.parse(url);
-      _logRequest(url, null);
+      final Map<String, String> headers = {
+        'content-type' : 'application/json',
+        'token' : AuthController.accessToken ?? ''
+      };
+      _logRequest(url, body, headers);
 
       Response response = await post(
           uri,
-          headers: {
-            'content-type' : 'application/json'
-          },
+          headers: headers,
           body: jsonEncode(body));
 
       _logResponse(url, response);
@@ -91,9 +96,10 @@ class NetworkCaller{
       );
     }
   }
-  static void _logRequest(String url, Map<String, String>? body){
+  static void _logRequest(String url, Map<String, String>? body, Map<String, String>? headers){
     debugPrint('======================Request============================\n'
         'URL: $url\n'
+        'HEADERS: $headers\n'
         'BODY: $body\n'
         '==================================================');
   }
