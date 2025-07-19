@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/widgets/screen_background.dart';
+import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
 
 import '../../data/urls.dart';
 
@@ -96,6 +97,15 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       url: Urls.loginUrl,
       body: requestBody,
     );
+  _addNewTaskInProgress = true;
+  setState(() {});
+    if(response.isSuccess){
+    _titleTEController.clear();
+    _descriptionTEController.clear();
+    showSnackBarMessage(context, 'Added new task');
+    } else {
+      showSnackBarMessage(context, response.errorMessage!);
+    }
   }
 
   @override
