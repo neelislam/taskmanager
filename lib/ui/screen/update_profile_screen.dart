@@ -64,7 +64,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 bottomLeft: Radius.circular(10),
                               ),
                             ),
-
                             alignment: Alignment.center,
                             child: Text(
                               'Image',
