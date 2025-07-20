@@ -44,26 +44,29 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-        Expanded(
-          child: Visibility(
-            visible: !_getNewTaskInProgress,
-            replacement: Center(
-              child: CircularProgressIndicator(),
+            Expanded(
+              child: Visibility(
+                visible: !_getNewTaskInProgress,
+                replacement: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                child: ListView.builder(
+                  itemCount: _newTaskList.length,
+                  itemBuilder: (context, index) {
+                    return TaskCard(
+                      taskType: TaskType.tNew,
+                      taskModel: _newTaskList[index],
+                    );
+                  },
+                ),
+              ),
             ),
-            child: ListView.builder(
-              itemCount: _newTaskList.length,
-              itemBuilder: (context, index) {
-                // return TaskCard(taskType: TaskType.tNew);
-              },
-            ),
-          ),
-        ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onTapAddNewTaskButton,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -71,26 +74,23 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   Future<void> _getNewTaskList() async {
     _getNewTaskInProgress = true;
     setState(() {});
+
     NetworkResponse response = await NetworkCaller.getRequest(
       url: Urls.getNewTaskUrl,
     );
 
-
-  if(response.isSuccess){
-    List<TaskModel> list = [];
-    for (Map<String, dynamic> jsonData in response.body!['date'] ){
-      list.add(TaskModel.fromJson(jsonData));
-
+    if (response.isSuccess) {
+      List<TaskModel> list = [];
+      for (Map<String, dynamic> jsonData in response.body!['data']) {
+        list.add(TaskModel.fromJson(jsonData));
+      }
+      _newTaskList = list;
+    } else {
+      showSnackBarMessage(context, response.errorMessage ?? 'Something went wrong');
     }
-    _newTaskList = list;
 
-  } else {
-  showSnackBarMessage(context, response.errorMessage!);
-  }
     _getNewTaskInProgress = false;
-
     setState(() {});
-
   }
 
   void _onTapAddNewTaskButton() {

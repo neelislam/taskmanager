@@ -31,7 +31,7 @@ class TaskCard extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    taskModel.status,
+                    _getTaskTypeName(),
                     style: TextStyle(color: Colors.white),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 16),
