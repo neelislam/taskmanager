@@ -98,6 +98,7 @@ class NetworkCaller {
   static Future<NetworkResponse> postRequest({
     required String url,
     Map<String, String>? body,
+    bool isFromLogin = false
   }) async {
     try {
       Uri uri = Uri.parse(url);
@@ -137,6 +138,9 @@ class NetworkCaller {
           );
         }
       } else if (response.statusCode == 401) {
+        if(isFromLogin){
+          _onUnAuthorize();
+        }
         // If the response is 401 Unauthorized, trigger the un-authorization flow.
         _onUnAuthorize();
         return NetworkResponse(
