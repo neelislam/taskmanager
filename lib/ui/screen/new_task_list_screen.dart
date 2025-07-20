@@ -17,7 +17,7 @@ class NewTaskListScreen extends StatefulWidget {
 
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
   bool _getNewTaskInProgress = false;
-  List<TaskModel> newTaskList = [];
+  List<TaskModel> _newTaskList = [];
 
   @override
   void initState() {
@@ -45,11 +45,17 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return TaskCard(taskType: TaskType.tNew);
-                },
+              child: Visibility(
+                visible: _getNewTaskInProgress = false,
+                replacement: Center(
+                  child: CircularProgressIndicator(),
+                ),
+                child: ListView.builder(
+                  itemCount: _newTaskList.length,
+                  itemBuilder: (context, index) {
+                    return TaskCard(taskType: TaskType.tNew);
+                  },
+                ),
               ),
             ),
           ],
@@ -76,7 +82,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
       list.add(TaskModel.fromJson(jsonData));
 
     }
-    newTaskList = list;
+    _newTaskList = list;
 
   } else {
   showSnackBarMessage(context, response.errorMessage!);
