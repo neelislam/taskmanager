@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 
+import '../../data/urls.dart';
 import '../widgets/task_card.dart';
 import '../widgets/task_counter_widgets.dart';
 
@@ -12,6 +14,8 @@ class NewTaskListScreen extends StatefulWidget {
 }
 
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
+  bool _getNewTaskInProgress = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +39,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return TaskCard(taskType: TaskType.tNew,);
+                  return TaskCard(taskType: TaskType.tNew);
                 },
               ),
             ),
@@ -49,8 +53,15 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     );
   }
 
+  Future<void> _getNewTaskList() async {
+    _getNewTaskInProgress = true;
+    setState(() {});
+    NetworkResponse response = await NetworkCaller.getRequest(
+      url: Urls.getNewTaskUrl,
+    );
+  }
+
   void _onTapAddNewTaskButton() {
     Navigator.pushNamed(context, AddNewTaskScreen.name);
   }
 }
-

@@ -35,11 +35,13 @@ class NetworkCaller {
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
       Uri uri = Uri.parse(url);
-
+      final Map<String, String> headers = {
+        'token': AuthController.accessToken ?? '', // Include authentication token
+      };
       // Log the outgoing request details.
-      _logRequest(url, null, null);
+      _logRequest(url, null, headers);
 
-      Response response = await get(uri);
+      Response response = await get(uri, headers:headers);
 
       // Log the incoming response details.
       _logResponse(url, response);
@@ -90,7 +92,6 @@ class NetworkCaller {
       );
     }
   }
-
   /// Makes an HTTP POST request to the specified [url] with an optional [body].
   /// Includes 'content-type': 'application/json' header and 'token' from [AuthController].
   /// Handles 401 Unauthorized responses by clearing user data and navigating to the sign-in screen.
@@ -138,7 +139,7 @@ class NetworkCaller {
           );
         }
       } else if (response.statusCode == 401) {
-        if(isFromLogin){
+        if(isFromLogin == false){
           _onUnAuthorize();
         }
         // If the response is 401 Unauthorized, trigger the un-authorization flow.

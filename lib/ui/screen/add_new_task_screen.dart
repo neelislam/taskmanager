@@ -129,6 +129,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     }
   }
 
+
   @override
   void dispose() {
     _titleTEController.dispose();
