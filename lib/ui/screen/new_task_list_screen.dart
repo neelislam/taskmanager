@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
+import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
 
 import '../../data/urls.dart';
 import '../widgets/task_card.dart';
@@ -59,6 +60,17 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     NetworkResponse response = await NetworkCaller.getRequest(
       url: Urls.getNewTaskUrl,
     );
+
+    _getNewTaskInProgress = false;
+    setState(() {});
+
+  if(response.isSuccess){
+    List<>
+
+  } else {
+  showSnackBarMessage(context, response.errorMessage!);
+  }
+
   }
 
   void _onTapAddNewTaskButton() {
