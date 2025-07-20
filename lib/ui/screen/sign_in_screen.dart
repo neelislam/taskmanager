@@ -140,7 +140,6 @@ class _SignInScreenState extends State<SignInScreen> {
       "email": _emailTEController.text.trim(),
       "password": _passwordTEController.text.trim(),
     };
-
     NetworkResponse response = await NetworkCaller.postRequest(
       url: Urls.loginUrl,
       body: requestBody,
