@@ -44,20 +44,20 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-            Expanded(
-              child: Visibility(
-                visible: _getNewTaskInProgress = false,
-                replacement: Center(
-                  child: CircularProgressIndicator(),
-                ),
-                child: ListView.builder(
-                  itemCount: _newTaskList.length,
-                  itemBuilder: (context, index) {
-                    return TaskCard(taskType: TaskType.tNew);
-                  },
-                ),
-              ),
+        Expanded(
+          child: Visibility(
+            visible: !_getNewTaskInProgress,
+            replacement: Center(
+              child: CircularProgressIndicator(),
             ),
+            child: ListView.builder(
+              itemCount: _newTaskList.length,
+              itemBuilder: (context, index) {
+                // return TaskCard(taskType: TaskType.tNew);
+              },
+            ),
+          ),
+        ),
           ],
         ),
       ),
