@@ -20,6 +20,12 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   List<TaskModel> newTaskList = [];
 
   @override
+  void initState() {
+    super.initState();
+    _getNewTaskList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
