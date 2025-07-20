@@ -3,6 +3,7 @@ import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
 
+import '../../data/models/task_model.dart';
 import '../../data/urls.dart';
 import '../widgets/task_card.dart';
 import '../widgets/task_counter_widgets.dart';
@@ -16,6 +17,7 @@ class NewTaskListScreen extends StatefulWidget {
 
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
   bool _getNewTaskInProgress = false;
+  List<TaskModel> newTaskList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +63,21 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
       url: Urls.getNewTaskUrl,
     );
 
-    _getNewTaskInProgress = false;
-    setState(() {});
 
   if(response.isSuccess){
-    List<>
+    List<TaskModel> list = [];
+    for (Map<String, dynamic> jsonData in response.body!['date'] ){
+      list.add(TaskModel.fromJson(jsonData));
+
+    }
+    newTaskList = list;
 
   } else {
   showSnackBarMessage(context, response.errorMessage!);
   }
+    _getNewTaskInProgress = false;
+
+    setState(() {});
 
   }
 
