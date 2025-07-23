@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/task_card.dart';
-
-class CancelledTaskScreen extends StatefulWidget {
-  const CancelledTaskScreen({super.key});
+class CancelledTaskListScreen extends StatefulWidget {
+  const CancelledTaskListScreen({super.key});
 
   @override
-  State<CancelledTaskScreen> createState() => _CancelledTaskScreenState();
+  State<CancelledTaskListScreen> createState() => _CancelledTaskListScreenState();
 }
 
-class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
+class _CancelledTaskListScreenState extends State<CancelledTaskListScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
           // return TaskCard(
-          //   taskType: TaskType.cancelled ,);
+          //   taskType: TaskType.cancelled,
+          // );
         },
       ),
     );

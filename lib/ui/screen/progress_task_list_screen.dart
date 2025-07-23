@@ -2,38 +2,46 @@ import 'package:flutter/material.dart';
 import '../../data/models/task_model.dart';
 import '../../data/service/network_caller.dart';
 import '../../data/urls.dart';
+import '../widgets/centered_circular_progress_indicator.dart';
 import '../widgets/snack_bar_message.dart';
 import '../widgets/task_card.dart';
-class ProgressTaskScreen extends StatefulWidget {
-  const ProgressTaskScreen({super.key});
+
+class ProgressTaskListScreen extends StatefulWidget {
+  const ProgressTaskListScreen({super.key});
+
   @override
-  State<ProgressTaskScreen> createState() => _ProgressTaskScreenState();
+  State<ProgressTaskListScreen> createState() => _ProgressTaskListScreenState();
 }
-class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
-  bool _getProgressTaskInProgress = false;
+
+class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
+  bool _getProgressTasksInProgress = false;
   List<TaskModel> _progressTaskList = [];
 
   @override
   void initState() {
     super.initState();
-    _getProgressTaskList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProgressTaskList();
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Visibility(
-        visible: _getProgressTaskInProgress == false,
-        replacement: Center(
-          child: CircularProgressIndicator(),
-        ),
+        visible: _getProgressTasksInProgress == false,
+        replacement: CenteredCircularProgressIndicator(),
         child: ListView.builder(
           itemCount: _progressTaskList.length,
           itemBuilder: (context, index) {
-            return TaskCard(taskType: TaskType.progress,
-              taskModel: _progressTaskList[index],);
+            return TaskCard(
+              taskType: TaskType.progress,
+              taskModel: _progressTaskList[index],
+              onStatusUpdate: () {
+                _getProgressTaskList();
+              },
+            );
           },
         ),
       ),
@@ -42,12 +50,11 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
 
 
   Future<void> _getProgressTaskList() async {
-    _getProgressTaskInProgress = true;
+    _getProgressTasksInProgress = true;
     setState(() {});
 
-    NetworkResponse response = await NetworkCaller.getRequest(
-      url: Urls.getProgressTaskUrl,
-    );
+    NetworkResponse response = await NetworkCaller
+        .getRequest(url: Urls.getProgressTasksUrl);
 
     if (response.isSuccess) {
       List<TaskModel> list = [];
@@ -56,10 +63,10 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       }
       _progressTaskList = list;
     } else {
-      showSnackBarMessage(context, response.errorMessage ?? 'Something went wrong');
+      showSnackBarMessage(context, response.errorMessage!);
     }
 
-    _getProgressTaskInProgress = false;
+    _getProgressTasksInProgress = false;
     setState(() {});
   }
 }

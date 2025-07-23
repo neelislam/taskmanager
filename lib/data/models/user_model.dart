@@ -1,35 +1,41 @@
-class UserModel{
-  String? id; // Made nullable
-  String? email; // Corrected key and made nullable
-  String? firstName; // Corrected key and made nullable
-  String? lastName; // Made nullable
-  String? mobile; // Made nullable
-  String? createdDate; // Added and made nullable
+class UserModel {
+  late String id;
+  late String email;
+  late String firstName;
+  late String lastName;
+  late String mobile;
+  String? photo;
 
   String get fullName {
-    // Safely access firstName and lastName, providing empty string if null
-    return '${firstName ?? ''} ${lastName ?? ''}';
+    return '$firstName $lastName';
   }
 
-  // Json to dart format conversion
+  UserModel({
+    required this.id,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.mobile,
+    this.photo,
+  });
+
   UserModel.fromJson(Map<String, dynamic> jsonData) {
     id = jsonData['_id'];
-    email = jsonData['email']; // Corrected from '_email' to 'email'
-    firstName = jsonData['firstName']; // Corrected from 'firstname' to 'firstName'
+    email = jsonData['email'];
+    firstName = jsonData['firstName'];
     lastName = jsonData['lastName'];
     mobile = jsonData['mobile'];
-    createdDate = jsonData['createdDate']; // Added parsing for createdDate
+    photo = jsonData['photo'];
   }
 
-  // dart to Json format conversion
   Map<String, dynamic> toJson() {
     return {
-      '_id': id, // Using _id to match API response for consistency
+      '_id': id,
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
       'mobile': mobile,
-      'createdDate': createdDate, // Added to toJson
+      'photo': photo,
     };
   }
 }

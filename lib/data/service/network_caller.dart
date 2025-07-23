@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
-import 'package:taskmanager/ui/app.dart';
-import 'package:taskmanager/ui/controllers/auth_controller.dart';
-import 'package:taskmanager/ui/screen/sign_in_screen.dart';
+import '../../ui/app.dart';
+import '../../ui/controllers/auth_controller.dart';
+import '../../ui/screen/sign_in_screen.dart';
 
 class NetworkResponse {
   final bool isSuccess;
@@ -21,184 +21,121 @@ class NetworkResponse {
 
 class NetworkCaller {
   static const String _defaultErrorMessage = 'Something went wrong';
-  static const String _unAuthorizedMessage = 'Un-Authorized';
+  static const String _unAuthorizeMessage = 'Un-authorized token';
+
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
       Uri uri = Uri.parse(url);
       final Map<String, String> headers = {
-        'token': AuthController.accessToken ?? '', // Include authentication token
+        'token': AuthController.accessToken ?? ''
       };
-      // Log the outgoing request details.
+
       _logRequest(url, null, headers);
-
-      Response response = await get(uri, headers:headers);
-
-      // Log the incoming response details.
+      Response response = await get(uri, headers: headers);
       _logResponse(url, response);
 
       if (response.statusCode == 200) {
-        // Attempt to decode the JSON response for successful requests.
-        try {
-          final decodedJson = jsonDecode(response.body);
-          return NetworkResponse(
-            isSuccess: true,
-            statusCode: response.statusCode,
-            body: decodedJson,
-            errorMessage: null,
-          );
-        } on FormatException {
-          // Handle cases where the response body is not valid JSON.
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: 'Invalid JSON format in response body',
-          );
-        }
-      } else {
-        // For non-200 status codes, attempt to parse an error message from the body.
-        try {
-          final decodedJson = jsonDecode(response.body);
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
-          );
-        } on FormatException {
-          // If JSON parsing fails for error responses, provide a generic error message.
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: 'Error: ${response.statusCode}. Could not parse error message from response.',
-          );
-        }
-      }
-    } catch (e) {
-      // Catch any exceptions during the HTTP request itself (e.g., network issues).
-      debugPrint('Error in getRequest: $e');
-      return NetworkResponse(
-        isSuccess: false,
-        statusCode: -1, // Custom status code for network errors
-        errorMessage: e.toString(),
-      );
-    }
-  }
-  /// Makes an HTTP POST request to the specified [url] with an optional [body].
-  /// Includes 'content-type': 'application/json' header and 'token' from [AuthController].
-  /// Handles 401 Unauthorized responses by clearing user data and navigating to the sign-in screen.
-  /// Returns a [NetworkResponse] indicating success or failure.
-  static Future<NetworkResponse> postRequest({
-    required String url,
-    Map<String, String>? body,
-    bool isFromLogin = false
-  }) async {
-    try {
-      Uri uri = Uri.parse(url);
-      final Map<String, String> headers = {
-        'content-type': 'application/json',
-        'token': AuthController.accessToken ?? '', // Include authentication token
-      };
-
-      // Log the outgoing request details, including headers and encoded body.
-      _logRequest(url, body, headers);
-
-      Response response = await post(
-        uri,
-        headers: headers,
-        body: jsonEncode(body), // Encode the request body to JSON
-      );
-
-      // Log the incoming response details.
-      _logResponse(url, response);
-
-      if (response.statusCode == 200) {
-        // Attempt to decode the JSON response for successful requests.
-        try {
-          final decodedJson = jsonDecode(response.body);
-          return NetworkResponse(
-            isSuccess: true,
-            statusCode: response.statusCode,
-            body: decodedJson,
-            errorMessage: null,
-          );
-        } on FormatException {
-          // Handle cases where the response body is not valid JSON.
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: 'Invalid JSON format in response body',
-          );
-        }
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: true,
+          statusCode: response.statusCode,
+          body: decodedJson,
+        );
       } else if (response.statusCode == 401) {
-        if(isFromLogin == false){
-          _onUnAuthorize();
-        }
-        // If the response is 401 Unauthorized, trigger the un-authorization flow.
         _onUnAuthorize();
         return NetworkResponse(
           isSuccess: false,
           statusCode: response.statusCode,
-          errorMessage: _unAuthorizedMessage,
+          errorMessage: _unAuthorizeMessage,
         );
       } else {
-        // For other non-200 status codes, attempt to parse an error message from the body.
-        try {
-          final decodedJson = jsonDecode(response.body);
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
-          );
-        } on FormatException {
-          // If JSON parsing fails for error responses, provide a generic error message.
-          return NetworkResponse(
-            isSuccess: false,
-            statusCode: response.statusCode,
-            errorMessage: 'Error: ${response.statusCode}. Could not parse error message from response.',
-          );
-        }
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
+        );
       }
     } catch (e) {
-      // Catch any exceptions during the HTTP request itself (e.g., network issues).
-      debugPrint('Error in postRequest: $e');
       return NetworkResponse(
         isSuccess: false,
-        statusCode: -1, // Custom status code for network errors
+        statusCode: -1,
         errorMessage: e.toString(),
       );
     }
   }
-  static void _logRequest(
-      String url,
-      Map<String, String>? body,
-      Map<String, String>? headers,
-      ) {
-    debugPrint(
-      '======================Request============================\n'
-          'URL: $url\n'
-          'HEADERS: $headers\n'
-          'BODY: ${body != null ? jsonEncode(body) : 'null'}\n' // Encode body for better logging readability
-          '==================================================',
-    );
-  }
-  static void _logResponse(String url, Response response) {
-    debugPrint(
-      '=====================Response=============================\n'
-          'URL: $url\n'
-          'STATUS CODE: ${response.statusCode}\n'
-          'BODY: ${response.body}\n'
-          '==================================================',
-    );
-  }
-  static Future<void> _onUnAuthorize() async {
-    await AuthController.clearData(); // Clear any stored authentication data.
-     Navigator.of(
-        TaskManagerApp.navigator.currentContext!,
-      ).pushNamedAndRemoveUntil(
-        SignInScreen.name,
-            (predicate) => false, // Remove all previous routes from the stack.
+
+  static Future<NetworkResponse> postRequest({required String url, Map<String,
+      String>? body, bool isFromLogin = false}) async {
+    try {
+      Uri uri = Uri.parse(url);
+
+      final Map<String, String> headers = {
+        'content-type': 'application/json',
+        'token': AuthController.accessToken ?? ''
+      };
+
+      _logRequest(url, body, headers);
+      Response response = await post(
+        uri,
+        headers: headers,
+        body: jsonEncode(body),
+      );
+      _logResponse(url, response);
+
+      if (response.statusCode == 200) {
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: true,
+          statusCode: response.statusCode,
+          body: decodedJson,
+        );
+      } else if (response.statusCode == 401) {
+        if (isFromLogin == false) {
+          _onUnAuthorize();
+        }
+        return NetworkResponse(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          errorMessage: _unAuthorizeMessage,
+        );
+      } else {
+        final decodedJson = jsonDecode(response.body);
+        return NetworkResponse(
+          isSuccess: false,
+          statusCode: response.statusCode,
+          errorMessage: decodedJson['data'] ?? _defaultErrorMessage,
+        );
+      }
+    } catch (e) {
+      return NetworkResponse(
+        isSuccess: false,
+        statusCode: -1,
+        errorMessage: e.toString(),
       );
     }
+  }
 
-    }
+  static void _logRequest(String url, Map<String, String>? body, Map<String, String>? headers) {
+    debugPrint('================== REQUEST ========================\n'
+        'URL: $url\n'
+        'HEADERS: $headers\n'
+        'BODY: $body\n'
+        '=============================================');
+  }
 
+  static void _logResponse(String url, Response response) {
+    debugPrint('=================== RESPONSE =======================\n'
+        'URL: $url\n'
+        'STATUS CODE: ${response.statusCode}\n'
+        'BODY: ${response.body}\n'
+        '=============================================');
+  }
 
+  static Future<void> _onUnAuthorize() async {
+    await AuthController.clearData();
+    Navigator.of(TaskManagerApp.navigator.currentContext!)
+        .pushNamedAndRemoveUntil(
+        SignInScreen.name, (predicate) => false);
+  }
+}

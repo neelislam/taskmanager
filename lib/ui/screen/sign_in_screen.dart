@@ -1,15 +1,15 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:taskmanager/data/service/network_caller.dart';
-import 'package:taskmanager/ui/controllers/auth_controller.dart'; // This is where the AuthController is
-import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
-import 'package:taskmanager/ui/widgets/screen_background.dart';
-import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
-
 import '../../data/models/user_model.dart';
+import '../../data/service/network_caller.dart';
 import '../../data/urls.dart';
+import '../controllers/auth_controller.dart';
+import '../widgets/centered_circular_progress_indicator.dart';
+import '../widgets/screen_background.dart';
+import '../widgets/snack_bar_message.dart';
+import 'fp_ur_email.dart';
 import 'main_nav_bar_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -52,7 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: InputDecoration(hintText: 'Email'),
                     validator: (String? value) {
                       String email = value ?? '';
-
                       if (EmailValidator.validate(email) == false) {
                         return 'Enter a valid email';
                       }
@@ -65,22 +64,19 @@ class _SignInScreenState extends State<SignInScreen> {
                     obscureText: true,
                     decoration: InputDecoration(hintText: 'Password'),
                     validator: (String? value) {
-                      if ((value?.length ?? 0) < 6) {
-                        return 'Enter a valid Password of minimum 6 length'; // Changed to 6 as per validator
+                      if ((value?.length ?? 0) <= 6) {
+                        return 'Enter a valid password';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
-
                   Visibility(
                     visible: _signInProgress == false,
-                    replacement: const Center( // Added const for CircularProgressIndicator
-                      child: CircularProgressIndicator(),
-                    ),
+                    replacement: CenteredCircularProgressIndicator(),
                     child: ElevatedButton(
                       onPressed: _onTapSignInButton,
-                      child: const Icon(Icons.arrow_circle_right_outlined), // Added const
+                      child: Icon(Icons.arrow_circle_right_outlined),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -89,26 +85,28 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         TextButton(
                           onPressed: _onTapForgotPasswordButton,
-                          child: const Text( // Added const
+                          child: Text(
                             'Forgot Password?',
-                            style: TextStyle(color: Colors.deepOrange),
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ),
                         RichText(
                           text: TextSpan(
-                            text: "Don't have an account?",
-                            style: const TextStyle( // Added const
+                            text: "Don't have an account? ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
                               color: Colors.black,
                               letterSpacing: 0.4,
                             ),
                             children: [
                               TextSpan(
-                                text: 'Sign-up',
-                                style: const TextStyle( // Added const
-                                  color: Colors.pink,
+                                text: 'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.green,
                                   fontWeight: FontWeight.w700,
                                 ),
-                                recognizer: TapGestureRecognizer()
+                                recognizer:
+                                TapGestureRecognizer()
                                   ..onTap = _onTapSignUpButton,
                               ),
                             ],
@@ -138,38 +136,30 @@ class _SignInScreenState extends State<SignInScreen> {
 
     Map<String, String> requestBody = {
       "email": _emailTEController.text.trim(),
-      "password": _passwordTEController.text.trim(),
+      "password": _passwordTEController.text,
     };
+
     NetworkResponse response = await NetworkCaller.postRequest(
-      url: Urls.loginUrl,
-      body: requestBody,
-      isFromLogin: true
+        url: Urls.loginUrl, body: requestBody, isFromLogin: true
     );
 
     if (response.isSuccess) {
       UserModel userModel = UserModel.fromJson(response.body!['data']);
       String token = response.body!['token'];
 
-      // Pass the String token directly.
-      // Ensure AuthController.saveUserData expects a String token.
       await AuthController.saveUserData(userModel, token);
 
       Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainNavBarScreen.name, // Corrected to use directly
-            (predicate) => false,
-      );
+          context, MainNavBarHolderScreen.name, (predicate) => false);
     } else {
       _signInProgress = false;
-      setState(() {
-        // Update UI to hide progress indicator on failure
-      });
+      setState(() {});
       showSnackBarMessage(context, response.errorMessage!);
     }
   }
 
   void _onTapForgotPasswordButton() {
-    Navigator.pushNamed(context, ForgotPasswordEmailAddress.name);
+    Navigator.pushNamed(context, ForgotPasswordEmailScreen.name);
   }
 
   void _onTapSignUpButton() {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TaskCounterWidgets extends StatelessWidget {
-  const TaskCounterWidgets({
-    super.key, required this.title, required this.count,
+class TaskCountSummaryCard extends StatelessWidget {
+  const TaskCountSummaryCard({
+    super.key,
+    required this.title,
+    required this.count,
   });
 
   final String title;
@@ -14,14 +16,12 @@ class TaskCounterWidgets extends StatelessWidget {
       elevation: 0,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$count',
-              style:
-              Theme.of(context).textTheme.titleLarge,),
-            Text(title, maxLines: 1,),
+            Text('$count', style: Theme.of(context).textTheme.titleLarge),
+            Text(title, maxLines: 1),
           ],
         ),
       ),

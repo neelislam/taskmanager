@@ -4,18 +4,19 @@ import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 
 import '../widgets/screen_background.dart';
 
-class SetPassword extends StatefulWidget {
-  const SetPassword({super.key});
-  static const String name = '/setPassword';
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
+  static const String name = '/change-password';
 
   @override
-  State<SetPassword> createState() => _SetPasswordState();
+  State<ChangePasswordScreen> createState() =>
+      _ChangePasswordScreenState();
 }
 
-class _SetPasswordState extends State<SetPassword> {
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final TextEditingController _passwordTEController = TextEditingController();
+  final TextEditingController _confirmPasswordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,59 +32,78 @@ class _SetPasswordState extends State<SetPassword> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 80,),
-                  Text('Set Password', style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 10,),
-                  Text('Enter a password that contains more than 6 digit with special character, (a-z) and (A-Z)',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: Colors.grey,
-                      )),
-
-                  const SizedBox(height: 24,),
-                  TextFormField(
-                      controller: _passwordController,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration( hintText:'Password',
-                      ),
+                  const SizedBox(height: 80),
+                  Text(
+                    'Set Password',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 5,),
-                  TextFormField(
-                    controller: _confirmPasswordController,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration( hintText:'Confirm password',
+                  const SizedBox(height: 4),
+                  Text(
+                    'Password should be more than 6 letters.',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(
+                        color: Colors.grey
                     ),
                   ),
-                  const SizedBox(height: 8,),
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: _passwordTEController,
+                    decoration: InputDecoration(
+                        hintText: 'Password'
+                    ),
+                    validator: (String? value) {
+                      if ((value?.length ?? 0) <= 6) {
+                        return 'Enter a valid password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _confirmPasswordTEController,
+                    decoration: InputDecoration(
+                        hintText: 'Confirm Password'
+                    ),
+                    validator: (String? value) {
+                      if ((value ?? '') != _passwordTEController.text) {
+                        return "Confirm password doesn't match";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _onTapSubmitButton,
-                    child: Icon(Icons.arrow_circle_right_outlined),
+                    child: Text('Confirm'),
                   ),
-                  const SizedBox(height: 32,),
+                  const SizedBox(height: 32),
                   Center(
-                    child: RichText(text: TextSpan(
-                        text: "Have an account?",
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Have an account? ",
                         style: TextStyle(
+                          fontWeight: FontWeight.w600,
                           color: Colors.black,
                           letterSpacing: 0.4,
                         ),
-
-
                         children: [
-
                           TextSpan(
-
-                            text: 'Sign-in',
+                            text: 'Sign In',
                             style: TextStyle(
-                              color: Colors.pink,
+                              color: Colors.green,
                               fontWeight: FontWeight.w700,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton,
+                            recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = _onTapSignInButton,
                           ),
-
-                        ]
+                        ],
+                      ),
                     ),
-                    ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -92,21 +112,22 @@ class _SetPasswordState extends State<SetPassword> {
       ),
     );
   }
-  void _onTapSubmitButton (){
-    Navigator.pushNamed(context, SignInScreen.name);
+
+  void _onTapSubmitButton() {
+    // if (_formKey.currentState!.validate()) {
+    //   // TODO: Sign in with API
+    // }
   }
 
-  void _onTapSignInButton(){
-    Navigator.pushNamed(context, SignInScreen.name);
-
+  void _onTapSignInButton() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, SignInScreen.name, (predicate) => false);
   }
 
   @override
   void dispose() {
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    _passwordTEController.dispose();
+    _confirmPasswordTEController.dispose();
     super.dispose();
   }
-
 }
-

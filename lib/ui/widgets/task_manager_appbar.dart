@@ -1,78 +1,77 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:taskmanager/ui/controllers/auth_controller.dart';
-import 'package:taskmanager/ui/screen/sign_in_screen.dart';
-import 'package:taskmanager/ui/screen/update_profile_screen.dart';
-
-class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TaskManagerAppBar({
-    super.key,
-  });
+import '../controllers/auth_controller.dart';
+import '../screen/sign_in_screen.dart';
+import '../screen/update_profile_screen.dart';
+class TMAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const TMAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Get the user model from AuthController, safely handling null
-    final user = AuthController.userModel;
+  State<TMAppBar> createState() => _TMAppBarState();
 
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
+
+class _TMAppBarState extends State<TMAppBar> {
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.green,
       title: GestureDetector(
-        onTap: () {
-          _onTapProfileAppBar(context);
-        },
+        onTap: _onTapProfileBar,
         child: Row(
           children: [
-            // Display CircleAvatar, you might want to add user profile picture here
-            const CircleAvatar(),
-            const SizedBox(width: 14,),
-            Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user != null
-                          ? '${user.firstName ?? ''} ${user.lastName ?? ''}' // Use fullName getter or combine
-                          : 'Guest User', // Default text if user is null
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    // Safely access email, provide default if null
-                    Text(
-                      user?.email ?? 'No Email', // Use null-aware access and default
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ]
+            CircleAvatar(
+              backgroundImage:
+              AuthController.userModel?.photo == null
+                  ? null
+                  : MemoryImage(
+                base64Decode(AuthController.userModel!.photo!),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                _onTapLogoutButton(context); // Pass context to the logout function
-              },
-              icon: const Icon(Icons.logout), // Added const for the icon
-            )
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AuthController.userModel!.fullName,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    AuthController.userModel!.email,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(onPressed: _onTapLogOutButton, icon: Icon(Icons.logout)),
           ],
         ),
       ),
     );
   }
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // Added const
-
-  Future<void> _onTapLogoutButton(BuildContext context) async {
+  Future<void> _onTapLogOutButton() async {
     await AuthController.clearData();
-    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (route) => false); // Navigate and clear back stack
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      SignInScreen.name,
+          (predicate) => false,
+    );
   }
 
-  void _onTapProfileAppBar(BuildContext context){
-    // Ensure context is valid and route settings are available
-    if(ModalRoute.of(context)?.settings.name != UpdateProfileScreen.name){
+  void _onTapProfileBar() {
+    if (ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name) {
       Navigator.pushNamed(context, UpdateProfileScreen.name);
     }
   }

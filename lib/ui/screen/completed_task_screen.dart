@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/task_card.dart';
-
-class CompletedTaskScreen extends StatefulWidget {
-  const CompletedTaskScreen({super.key});
+class CompletedTaskListScreen extends StatefulWidget {
+  const CompletedTaskListScreen({super.key});
 
   @override
-  State<CompletedTaskScreen> createState() => _CompletedTaskScreenState();
+  State<CompletedTaskListScreen> createState() => _CompletedTaskListScreenState();
 }
 
-class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
+class _CompletedTaskListScreenState extends State<CompletedTaskListScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          // return TaskCard(taskType: TaskType.complete,);
+          // return TaskCard(
+          //   taskType: TaskType.completed,
+          // );
         },
       ),
     );
