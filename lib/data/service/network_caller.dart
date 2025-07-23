@@ -5,11 +5,6 @@ import 'package:taskmanager/ui/app.dart';
 import 'package:taskmanager/ui/controllers/auth_controller.dart';
 import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 
-/// Represents the response from a network request.
-/// [isSuccess]: True if the request was successful (HTTP 200), false otherwise.
-/// [statusCode]: The HTTP status code of the response.
-/// [body]: The decoded JSON body of the response, if successful.
-/// [errorMessage]: An error message if the request failed or an exception occurred.
 class NetworkResponse {
   final bool isSuccess;
   final int statusCode;
@@ -24,14 +19,9 @@ class NetworkResponse {
   });
 }
 
-/// A utility class for making HTTP GET and POST requests.
 class NetworkCaller {
   static const String _defaultErrorMessage = 'Something went wrong';
   static const String _unAuthorizedMessage = 'Un-Authorized';
-
-  /// Makes an HTTP GET request to the specified [url].
-  /// Returns a [NetworkResponse] indicating success or failure,
-  /// along with the status code, body, and an error message if applicable.
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
       Uri uri = Uri.parse(url);
@@ -177,8 +167,6 @@ class NetworkCaller {
       );
     }
   }
-
-  /// Logs the details of an outgoing HTTP request to the debug console.
   static void _logRequest(
       String url,
       Map<String, String>? body,
@@ -192,8 +180,6 @@ class NetworkCaller {
           '==================================================',
     );
   }
-
-  /// Logs the details of an incoming HTTP response to the debug console.
   static void _logResponse(String url, Response response) {
     debugPrint(
       '=====================Response=============================\n'
@@ -203,24 +189,16 @@ class NetworkCaller {
           '==================================================',
     );
   }
-
-  /// Handles un-authorization by clearing user data and navigating to the sign-in screen.
-  /// It checks if the navigator context is available before attempting navigation to prevent errors.
   static Future<void> _onUnAuthorize() async {
     await AuthController.clearData(); // Clear any stored authentication data.
-
-    // Ensure the navigator context is available before attempting to push a new route.
-    if (TaskManagerApp.navigator.currentContext != null) {
-      Navigator.of(
+     Navigator.of(
         TaskManagerApp.navigator.currentContext!,
       ).pushNamedAndRemoveUntil(
         SignInScreen.name,
             (predicate) => false, // Remove all previous routes from the stack.
       );
-    } else {
-      debugPrint('Error: Navigator context not available for un-authorization. Cannot navigate.');
-      // In a real application, you might want to add a fallback,
-      // like showing a toast message or a dialog, if navigation isn't possible.
     }
-  }
-}
+
+    }
+
+
