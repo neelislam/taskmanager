@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager/data/models/task_status_count.dart';
 import 'package:taskmanager/data/service/network_caller.dart';
 import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 import 'package:taskmanager/ui/widgets/snack_bar_message.dart';
@@ -17,14 +18,16 @@ class NewTaskListScreen extends StatefulWidget {
 
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
   bool _getNewTaskInProgress = false;
+  bool _getTaskStatusCountList = false;
   List<TaskModel> _newTaskList = [];
+  List<TaskModel> _taskStatusCountModel = [];
 
   @override
   void initState() {
     super.initState();
     _getNewTaskList();
+    _getNewTaskList();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +40,10 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
               height: 100,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return TaskCounterWidgets(title: 'Progress', count: 12);
+                  return TaskCounterWidgets(
+                      title: 'Progress',
+                      count: 12
+                  );
                 },
                 separatorBuilder: (context, index) => const SizedBox(width: 1),
                 itemCount: 5,
@@ -85,6 +91,27 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
         list.add(TaskModel.fromJson(jsonData));
       }
       _newTaskList = list;
+    } else {
+      showSnackBarMessage(context, response.errorMessage ?? 'Something went wrong');
+    }
+
+    _getNewTaskInProgress = false;
+    setState(() {});
+  }
+  Future<void> _getNewStatusCountList() async {
+    _getNewTaskInProgress = true;
+    setState(() {});
+
+    NetworkResponse response = await NetworkCaller.getRequest(
+      url: Urls.getTaskStatusCountUrl,
+    );
+
+    if (response.isSuccess) {
+      List<TaskStatusCountModel> list = [];
+      for (Map<String, dynamic> jsonData in response.body!['data']) {
+        list.add(TaskStatusCountModel.fromJson(jsonData));
+      }
+      _getTaskStatusCountList = list as bool;
     } else {
       showSnackBarMessage(context, response.errorMessage ?? 'Something went wrong');
     }
