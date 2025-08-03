@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:http/http.dart';
 import '../../ui/app.dart';
 import '../../ui/controllers/auth_controller.dart';
@@ -134,8 +136,6 @@ class NetworkCaller {
 
   static Future<void> _onUnAuthorize() async {
     await AuthController.clearData();
-    Navigator.of(TaskManagerApp.navigator.currentContext!)
-        .pushNamedAndRemoveUntil(
-        SignInScreen.name, (predicate) => false);
+    Get.offAllNamed(SignInScreen.name);
   }
 }

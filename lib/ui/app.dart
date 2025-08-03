@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Import GetX
 import 'package:taskmanager/ui/screen/add_new_task_screen.dart';
 import 'package:taskmanager/ui/screen/fp_ur_email.dart';
 import 'package:taskmanager/ui/screen/main_nav_bar_screen.dart';
@@ -8,10 +9,15 @@ import 'package:taskmanager/ui/screen/sign_in_screen.dart';
 import 'package:taskmanager/ui/screen/sign_up_page.dart';
 import 'package:taskmanager/ui/screen/splash_screen.dart';
 import 'package:taskmanager/ui/screen/update_profile_screen.dart';
+
 class TaskManagerApp extends StatefulWidget {
   const TaskManagerApp({super.key});
 
-  static GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
+  // You generally won't need this GlobalKey with GetX for routing,
+  // as GetX provides its own navigation methods (Get.to, Get.offAll, etc.)
+  // If you have specific reasons for keeping it (e.g., non-GetX specific
+  // dialogs or external package integrations), you can, but often it's redundant.
+  // static GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
 
   @override
   State<TaskManagerApp> createState() => _TaskManagerAppState();
@@ -20,20 +26,19 @@ class TaskManagerApp extends StatefulWidget {
 class _TaskManagerAppState extends State<TaskManagerApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: TaskManagerApp.navigator, // Use TaskManagerApp.navigator
+    return GetMaterialApp( // Changed from MaterialApp to GetMaterialApp
+      // navigatorKey is often not needed with GetX's built-in navigation
+      // navigatorKey: TaskManagerApp.navigator,
       theme: ThemeData(
         colorSchemeSeed: Colors.pink,
-        //primarySwatch: Colors.deepOrange, // Note: primarySwatch is deprecated in favor of colorSchemeSeed
-        textTheme: TextTheme(
+        textTheme: const TextTheme( // Added const
             titleLarge: TextStyle(
                 fontSize: 28, fontWeight: FontWeight.w700
             )
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme( // Added const
           fillColor: Colors.white,
           filled: true,
-          // to make the text slim
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           hintStyle: TextStyle(
             color: Colors.grey,
@@ -53,11 +58,11 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            fixedSize: Size.fromWidth(double.maxFinite),
+            fixedSize: const Size.fromWidth(double.maxFinite), // Added const
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8), // Use BorderRadius.circular
+              borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12), // Added const
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
           ),
@@ -65,22 +70,25 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: Colors.pink,
-
           ),
         ),
       ),
-      initialRoute: SplashScreen.name, // Use the static name
+      initialRoute: SplashScreen.name,
+      // GetX works well with named routes.
+      // You can also use GetPage for more advanced routing features like middleware
+      // and nested routes, but your current setup works fine with `routes`.
       routes: {
-        SplashScreen.name : (context) => SplashScreen(),
-        SignInScreen.name : (context) => SignInScreen(),
-        SignUpScreen.name : (context) => SignUpScreen(),
-        ForgotPasswordEmailScreen.name : (context) => ForgotPasswordEmailScreen(),
-        PinVerificationScreen.name : (context) => PinVerificationScreen(),
-        ChangePasswordScreen.name : (context) => ChangePasswordScreen(),
-        MainNavBarHolderScreen.name : (context) => MainNavBarHolderScreen(),
-        AddNewTaskScreen.name : (context) => AddNewTaskScreen(),
-        UpdateProfileScreen.name : (context) => UpdateProfileScreen(),
+        SplashScreen.name : (context) => const SplashScreen(), // Added const
+        SignInScreen.name : (context) => const SignInScreen(), // Added const
+        SignUpScreen.name : (context) => const SignUpScreen(), // Added const
+        ForgotPasswordEmailScreen.name : (context) => const ForgotPasswordEmailScreen(), // Added const
+        PinVerificationScreen.name : (context) => const PinVerificationScreen(), // Added const
+        ChangePasswordScreen.name : (context) => const ChangePasswordScreen(), // Added const
+        MainNavBarHolderScreen.name : (context) => const MainNavBarHolderScreen(), // Added const
+        AddNewTaskScreen.name : (context) => const AddNewTaskScreen(), // Added const
+        UpdateProfileScreen.name : (context) => const UpdateProfileScreen(), // Added const
       },
+      debugShowCheckedModeBanner: false, // Often useful to turn off debug banner
     );
   }
 }
